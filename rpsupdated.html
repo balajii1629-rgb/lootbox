@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RPS</title>
+</head>
+
+<style>
+
+body{
+  background: radial-gradient(circle at top,#222,#000);
+  color:white;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align:center;
+  padding-top:60px;
+}
+
+.title{
+  font-family:"Impact", fantasy;
+  font-weight:bolder;
+  font-size:40px;
+  letter-spacing:3px;
+  margin-bottom:40px;
+  text-shadow:0px 0px 10px #00ffff;
+}
+
+button{
+  padding:15px 30px;
+  margin:10px;
+  font-size:18px;
+  font-weight:bold;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0px 5px 15px rgba(0,0,0,0.5);
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+button:nth-of-type(1){
+  background:#ff4757;
+  color:white;
+}
+
+button:nth-of-type(2){
+  background:#1e90ff;
+  color:white;
+}
+
+button:nth-of-type(3){
+  background:#2ed573;
+  color:white;
+}
+
+button:nth-of-type(4){
+  background:#ffa502;
+  color:white;
+}
+
+#res,#gam,#sco{
+  margin-top:20px;
+  font-size:20px;
+  font-weight:bold;
+  background:rgba(255,255,255,0.05);
+  padding:10px;
+  border-radius:8px;
+  width:320px;
+  margin-left:auto;
+  margin-right:auto;
+  box-shadow:0px 0px 10px rgba(255,255,255,0.1);
+}
+
+</style>
+
+<body>
+
+  <p class="title">ROCK - PAPER - SCISSOR</p>
+  
+  <button onclick="game('ROCK');">ROCK</button>
+  <button onclick="game('PAPER');">PAPER</button>
+  <button onclick="game('SCISSOR')">SCISSOR</button> 
+
+  <p id="res"></p>
+  <p id="gam"></p>
+  <p id="sco"></p>
+
+  <button onclick="rest();">RESET</button>
+  
+<script>
+  let score={
+  wins:0, 
+  losses:0, 
+  ties:0
+    }
+   JSON.parse(localStorage.getItem('score'));
+ 
+     sco.innerText=(localStorage.getItem('score'));
+
+   function rest()
+   {
+  score.wins=0;
+  score.losses=0;
+  score.ties=0;
+  sco.innerText="wins:0 || losses:0 || ties:0";
+  res.innerText="";
+  gam.innerText="";
+  localStorage.removeItem('score');
+  
+  }
+  function pickCom(){
+  let randomNumber= Math.random();
+      let computerMove='';
+  if(0< randomNumber < 0.4) 
+  {
+  comupterMove='ROCK';
+  }
+  else if(0.4< randomNumber < 0.7) 
+ {
+  computerMove='PAPER';
+  }
+  else 
+  {
+  computerMove='SCISSOR';
+  }
+  console.log(computerMove)
+  return computerMove;
+  }
+  
+ function game(move){
+    let computerMove=pickCom();
+      let result='';
+if(move==='ROCK')
+{
+  if(computerMove==='ROCK')
+  {
+    result='Tie';
+  }
+  else if(computerMove==='PAPER')
+  {
+    result='You Loose';
+  }
+  else if (computerMove==='SCISSOR')
+  {
+    result='You Win';
+  } 
+}
+else if(move==='PAPER')
+{
+  if(computerMove==='ROCK')
+  {
+    result='You Win';
+  }
+  else if(computerMove==='PAPER')
+  {
+    result='Tie';
+  }
+  else if (computerMove==='SCISSOR')
+  {
+    result='You Loose';
+  }
+}
+else if (move==='SCISSOR')
+{
+    if(computerMove==='ROCK')
+  {
+    result='You Loose';
+  }
+  else if(computerMove==='PAPER')
+  {
+    result='You Win';
+  }
+  else if (computerMove==='SCISSOR')
+  {
+    result='Tie';
+  }
+}
+if(result==='You Win')
+{
+  score.wins+=1;
+}
+else if(result==='You Loose')
+{
+  score.losses+=1;
+}
+else if(result==='Tie')
+{
+  score.ties+=1;
+}
+let res=document.getElementById("res").innerText='You: '+move+'  ||  Computer:'+computerMove+'.';
+
+let gam=document.getElementById('gam').innerText="Result: "+result;
+ 
+let sco=document.getElementById('sco').innerText='wins: '+score.wins+' || losses: '+score.losses+' || ties: '+score.ties;
+
+
+  
+localStorage.setItem('score',JSON.stringify(score));
+/*
+  alert('you picked '+move+'.computer picked '+computerMove+'.'+result+' wins:'+score.wins+' losses:'+score.losses+' ties:'+score.ties)  ;*/
+ }
+  
+</script>
+
+</body>
+</html>
